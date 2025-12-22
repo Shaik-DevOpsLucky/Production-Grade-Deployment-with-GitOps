@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: ecom-app
-        image: moulashaik9618/multibranch-flask-app:latest
+        image: moulashaik9618/multibranch-flask-app:build-1
         ports:
         - containerPort: 5000
