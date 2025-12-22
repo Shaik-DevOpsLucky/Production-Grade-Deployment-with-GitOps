@@ -108,7 +108,31 @@ eksctl version
 =====================
 Creation of Cluster
 =====================
+1️⃣ Create cluster without defining nodes (default behavior it will create 2 nodes)
 eksctl create cluster --name prod-cluster --region us-east-1 --node-type t2.medium  --zones us-east-1a,us-east-1b
+
+NOTE: T2 instance types can't available for free tier aws account use t3 machine types.
+t3.micro, t3.small, 
+
+eksctl create cluster --name prod-cluster --region us-east-1 --node-type t3.small  --zones us-east-1a,us-east-1b
+
+2️⃣ Create cluster with min / max / desired nodes (recommended)
+eksctl create cluster \
+  --name prod-cluster \
+  --region us-east-1 \
+  --zones us-east-1a,us-east-1b \
+  --node-type t3.small \
+  --nodes 2 \
+  --nodes-min 1 \
+  --nodes-max 4 \
+  --managed
+
+3️⃣ Create cluster with only desired nodes
+eksctl create cluster \
+  --name prod-cluster \
+  --region us-east-1 \
+  --node-type t3.small \
+  --nodes 3
 
 
 #To delete the cluster
@@ -120,15 +144,20 @@ sudo systemctl restart jenkins
 
 aws sts get-caller-identity  # To verify the permission
 
-kubectl get nodes
-kubectl get pods
-
 =====================
 Configure kubeconfig
 =====================
 aws eks update-kubeconfig \
   --region us-east-1 \
-  --name eks-cluster
+  --name prod-cluster
+
+🔍 Verify kubeconfig is updated
+kubectl config current-context
+
+🧪 Test cluster access
+kubectl get nodes
+kubectl get pods -A
+
 
 sudo mkdir -p /home/jenkins/.kube
 sudo cp /root/.kube/config /home/jenkins/.kube/config
