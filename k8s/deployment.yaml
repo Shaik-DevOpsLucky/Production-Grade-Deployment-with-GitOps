@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecom-app
+  namespace: default
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: ecom-app
+  template:
+    metadata:
+      labels:
+        app: ecom-app
+    spec:
+      containers:
+      - name: ecom-app
+        image: moulashaik9618/multibranch-flask-app:latest
+        ports:
+        - containerPort: 5000
