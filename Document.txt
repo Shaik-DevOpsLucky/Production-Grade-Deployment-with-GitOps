@@ -81,6 +81,11 @@ sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 docker --version
 
+####OR####
+
+apt install docker.io -y
+
+
 ==============================
 => K8s Essentials Installation
 ==============================
